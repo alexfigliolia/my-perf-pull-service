@@ -9,6 +9,10 @@ export class Logger {
     this.LOG(chalk.blueBright.bold("Pull Service:"), ...messages);
   };
 
+  public static GQL = (...messages: any[]) => {
+    this.LOG(chalk.greenBright.bold("GQL:"), ...messages);
+  };
+
   public static silence() {
     this.LOG = this.NOOP;
   }

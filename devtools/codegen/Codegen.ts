@@ -4,8 +4,8 @@ import { ChildProcess } from "@figliolia/child-process";
 
 export class CodeGen {
   private static readonly Schemas = [
-    { url: "https://localhost:4001", types: "src/GQL/AsyncService/Types" },
     { url: "https://localhost:4000", types: "src/GQL/CoreService/Types" },
+    { url: "https://localhost:4001", types: "src/GQL/AsyncService/Types" },
   ] as const;
 
   public static async run() {

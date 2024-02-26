@@ -22,9 +22,10 @@ export abstract class Pull<T extends any[]> {
     try {
       const results = await this.nextPage();
       this.data.push(...results);
+      this.currentPage++;
       const { length: size } = results;
       if (size && size === this.options.pageSize) {
-        return this.pull();
+        await this.pull();
       }
       this.status = JobStatus.Complete;
     } catch (error) {

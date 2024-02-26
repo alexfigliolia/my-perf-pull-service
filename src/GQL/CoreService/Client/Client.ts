@@ -8,7 +8,7 @@ export class CoreServiceClient<
 > extends GQLClient<D, V> {
   constructor(options: CoreServiceOptions<V>) {
     super({
-      url: `${Environment.ASYNC_SERVICE_URL}/graphql`,
+      url: `${Environment.CORE_SERVICE_URL}/graphql`,
       ...options,
     });
   }
