@@ -9,8 +9,8 @@ export class Environment {
   public static CORE_SERVICE_URL = this.accessOrThrow("CORE_SERVICE_URL");
   public static ASYNC_SERVICE_URL = this.accessOrThrow("ASYNC_SERVICE_URL");
 
-  public static get origin() {
-    return "http://localhost:4000";
+  public static get origins() {
+    return [this.ASYNC_SERVICE_URL];
   }
 
   private static accessOrThrow(key: string) {

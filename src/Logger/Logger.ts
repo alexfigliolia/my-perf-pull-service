@@ -6,7 +6,7 @@ export class Logger {
   private static LOG = this._LOG;
 
   public static core = (...messages: any[]) => {
-    this.LOG(chalk.blueBright.bold("Async Service:"), ...messages);
+    this.LOG(chalk.blueBright.bold("Pull Service:"), ...messages);
   };
 
   public static silence() {
