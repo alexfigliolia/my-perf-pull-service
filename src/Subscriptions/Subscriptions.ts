@@ -4,7 +4,7 @@ import { RepositoryPulls } from "./RepositoryPulls";
 export class Subscriptions {
   private static initialized = false;
   public static readonly Streams = [RepositoryPulls];
-  public static readonly instances: BaseSubscription<any, any>[];
+  public static instances: BaseSubscription<any, any>[] = [];
 
   public static initialize() {
     if (this.initialized) {
@@ -19,5 +19,6 @@ export class Subscriptions {
     this.instances.forEach(instance => {
       instance.destroy();
     });
+    this.instances = [];
   }
 }
