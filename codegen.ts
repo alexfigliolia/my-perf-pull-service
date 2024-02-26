@@ -4,9 +4,19 @@ const config: CodegenConfig = {
   overwrite: true,
   verbose: true,
   generates: {
-    "./src/GQL/JobService/Types/": {
-      documents: ["src/GQL/JobService/Queries/*.gql.ts"],
-      schema: "./src/GQL/JobService/Types/graphql-schema.graphql",
+    "./src/GQL/AsyncService/Types/": {
+      documents: ["src/GQL/AsyncService/Queries/*.gql.ts"],
+      schema: "./src/GQL/AsyncService/Types/graphql-schema.graphql",
+      preset: "client",
+      plugins: [],
+      presetConfig: {
+        gqlTagName: "gql",
+        fragmentMasking: false,
+      },
+    },
+    "./src/GQL/CoreService/Types/": {
+      documents: ["src/GQL/CoreService/Queries/*.gql.ts"],
+      schema: "./src/GQL/CoreService/Types/graphql-schema.graphql",
       preset: "client",
       plugins: [],
       presetConfig: {

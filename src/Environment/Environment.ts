@@ -7,7 +7,8 @@ export class Environment {
   public static CERTS_PATH = this.accessOrThrow("CERTS_PATH");
   public static AUTH_SECRET = this.accessOrThrow("AUTH_SECRET");
   public static POSTGRES_URL = this.accessOrThrow("POSTGRES_URL");
-  public static JOB_SERVICE_URL = this.accessOrThrow("JOB_SERVICE_URL");
+  public static CORE_SERVICE_URL = this.accessOrThrow("CORE_SERVICE_URL");
+  public static ASYNC_SERVICE_URL = this.accessOrThrow("ASYNC_SERVICE_URL");
 
   public static get origin() {
     return "http://localhost:4000";

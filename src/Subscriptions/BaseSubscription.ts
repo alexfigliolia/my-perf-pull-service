@@ -39,7 +39,8 @@ export abstract class BaseSubscription<P, T extends Pull<any>> {
   }
 
   public async enqueue(pull: T) {
-    await pull.pull();
+    const puller = await pull.pull();
+    await puller.onComplete();
     if (!this.closed) {
       return this.poll();
     }

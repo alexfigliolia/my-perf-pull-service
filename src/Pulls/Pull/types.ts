@@ -1,3 +1,5 @@
+import type { Platform } from "GQL/CoreService/Types";
+
 export interface Options {
   id: number;
   token: string;
@@ -8,7 +10,3 @@ export interface Options {
   organizationId: number;
   requestMethod: "GET" | "POST";
 }
-
-export type Platform = "github" | "bitbucket";
-
-export type Status = "fail" | "success" | "in-progress";

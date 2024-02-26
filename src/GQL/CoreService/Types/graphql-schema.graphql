@@ -1,0 +1,81 @@
+schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
+}
+type Query {
+  installationSetup(platform: Platform!, installation_id: Int!): Installation!
+  userAndAffiliations: UserAndAffiliations!
+}
+type Installation {
+  id: Int!
+  installation_id: Int!
+  platform: Platform!
+  organizationId: Int
+  type: InstallationType!
+}
+type UserAndAffiliations {
+  id: Int!
+  name: String!
+  organizations: [OrgAffiliationType!]!
+  github: GithubUserAuthorizationType
+}
+type OrgAffiliationType {
+  id: Int!
+  name: String!
+  roles: [RoleType!]!
+  installations: [Installation!]!
+}
+type RoleType {
+  role: UserRole!
+}
+type GithubUserAuthorizationType {
+  id: Int!
+  token: String!
+}
+type Mutation {
+  logout: Boolean!
+  verifySession: Boolean!
+  verifyAnonymous: Boolean!
+  loginWithGithub(code: String!): User!
+  createGithubAccount(code: String!, installation_id: Int!, name: String!): Boolean!
+  setOrganizationRepositories(repositories: [InputRepository!]!): Boolean!
+}
+type User {
+  id: Int!
+  name: String!
+}
+type Subscription {
+  installationSetup(platform: Platform!, installation_id: Int!): Installation!
+}
+enum Platform {
+  github
+  bitbucket
+}
+enum InstallationType {
+  organization
+  individual
+}
+enum UserRole {
+  admin
+  manager
+  viewer
+}
+input InputRepository {
+  name: String!
+  api_url: String!
+  html_url: String!
+  clone_url: String!
+  created_at: String!
+  updated_at: String!
+  platform: Platform!
+  platform_id: Int!
+  organizationId: Int!
+  language: String
+  description: String
+}
+"Exposes a URL that specifies the behavior of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behavior of this scalar."
+    url: String!
+  ) on SCALAR

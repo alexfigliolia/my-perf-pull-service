@@ -1,4 +1,4 @@
-import type { RepositoryPullJob } from "GQL";
+import type { RepositoryPullJob } from "GQL/AsyncService/Types";
 
 export type Config = Omit<RepositoryPullJob, "jobId">;
 

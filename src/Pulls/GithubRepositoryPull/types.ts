@@ -1,6 +1,6 @@
-import type { Platform } from "Pulls/types";
+import type { Platform } from "GQL/CoreService/Types";
 
-export interface MPRepository {
+export interface IRepository {
   name: string;
   api_url: string;
   html_url: string;
@@ -9,6 +9,7 @@ export interface MPRepository {
   updated_at: string;
   platform: Platform;
   platform_id: number;
+  organizationId: number;
   language: string | null;
   description: string | null;
 }

@@ -1,11 +1,17 @@
 import type { Repository } from "@octokit/webhooks-types";
 import { API } from "Github";
 import { Errors } from "Github/Errors";
-import type { Platform } from "Pulls/Pull";
+import { setOrganizationRepositories } from "GQL";
+import { CoreServiceRequest } from "GQL/CoreService/Client/Request";
+import type {
+  SetOrganizationRepositoriesMutation,
+  SetOrganizationRepositoriesMutationVariables,
+} from "GQL/CoreService/Types";
+import { Platform } from "GQL/CoreService/Types";
 import { Pull } from "Pulls/Pull";
-import type { MPRepository } from "Schema/Resolvers/Repository/types";
+import type { IRepository } from "./types";
 
-export class GithubRepositoryPull extends Pull<MPRepository[]> {
+export class GithubRepositoryPull extends Pull<IRepository[]> {
   public async nextPage() {
     const { pageSize: size, token, api_url: url } = this.options;
     const params = new URLSearchParams({
@@ -22,18 +28,39 @@ export class GithubRepositoryPull extends Pull<MPRepository[]> {
     return response.map(repo => this.transform(repo));
   }
 
+  public async onComplete() {
+    const promises: Promise<any>[] = [this.setJobStatus()];
+    if (this.data.length) {
+      promises.push(this.pushRepositoriesToCore());
+    }
+    await Promise.all(promises);
+  }
+
   private transform(repository: Repository) {
     return {
       name: repository.name,
       api_url: repository.url,
+      platform: Platform.Github,
       platform_id: repository.id,
       html_url: repository.html_url,
       language: repository.language,
-      platform: "github" as Platform,
       clone_url: repository.clone_url,
       description: repository.description,
+      organizationId: this.options.organizationId,
       created_at: repository.created_at.toString(),
       updated_at: repository.updated_at.toString(),
     };
+  }
+
+  private pushRepositoriesToCore() {
+    return CoreServiceRequest<
+      SetOrganizationRepositoriesMutation,
+      SetOrganizationRepositoriesMutationVariables
+    >({
+      query: setOrganizationRepositories,
+      variables: {
+        repositories: this.data,
+      },
+    });
   }
 }

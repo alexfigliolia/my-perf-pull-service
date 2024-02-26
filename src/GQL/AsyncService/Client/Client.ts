@@ -1,14 +1,14 @@
 import { Environment } from "Environment";
 import { GQLClient } from "GQL/Client";
-import type { JobServiceOptions } from "./types";
+import type { AsyncServiceOptions } from "./types";
 
-export class JobServiceClient<
+export class AsyncServiceClient<
   D,
   V extends Record<string, any> = Record<string, any>,
 > extends GQLClient<D, V> {
-  constructor(options: JobServiceOptions<V>) {
+  constructor(options: AsyncServiceOptions<V>) {
     super({
-      url: `${Environment.JOB_SERVICE_URL}/graphql`,
+      url: `${Environment.ASYNC_SERVICE_URL}/graphql`,
       ...options,
     });
   }

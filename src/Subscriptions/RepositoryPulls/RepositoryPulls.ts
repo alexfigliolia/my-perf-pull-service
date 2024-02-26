@@ -1,16 +1,17 @@
 import { Environment } from "Environment";
+import {
+  AsyncServiceRequest,
+  GQLSubscription,
+  nextPullJob,
+  pullSubscription,
+} from "GQL";
 import type {
   NextPullJobQuery,
   NextPullJobQueryVariables,
   RepositoryPullsSubscription,
   RepositoryPullsSubscriptionVariables,
-} from "GQL";
-import {
-  GQLSubscription,
-  JobServiceRequest,
-  nextPullJob,
-  pullSubscription,
-} from "GQL";
+} from "GQL/AsyncService/Types";
+import { Platform } from "GQL/AsyncService/Types";
 import { GithubRepositoryPull } from "Pulls";
 import { BaseSubscription } from "Subscriptions/BaseSubscription";
 import type { Config, IncomingJob } from "./types";
@@ -22,7 +23,7 @@ export class RepositoryPulls extends BaseSubscription<
   public stream = new GQLSubscription<
     RepositoryPullsSubscription,
     RepositoryPullsSubscriptionVariables
-  >(`${Environment.JOB_SERVICE_URL}/graphql`, pullSubscription, {});
+  >(`${Environment.ASYNC_SERVICE_URL}/graphql`, pullSubscription, {});
 
   public initialize() {
     void this.poll();
@@ -41,7 +42,7 @@ export class RepositoryPulls extends BaseSubscription<
 
   public async poll() {
     try {
-      const response = await JobServiceRequest<
+      const response = await AsyncServiceRequest<
         NextPullJobQuery,
         NextPullJobQueryVariables
       >({
@@ -56,7 +57,7 @@ export class RepositoryPulls extends BaseSubscription<
   }
 
   public createPull(job: Config) {
-    if (job.platform === "github") {
+    if (job.platform === Platform.Github) {
       return new GithubRepositoryPull(job);
     }
     throw new Error("Not implemented");
