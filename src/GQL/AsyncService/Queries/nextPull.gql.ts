@@ -1,8 +1,8 @@
 import { gql } from "graphql-request";
 
-export const nextPullJob = gql`
-  query nextPullJob {
-    nextPullJob {
+export const nextRepositoryPullJob = gql`
+  query nextRepositoryPullJob {
+    nextRepositoryPullJob {
       jobId
       api_url
       token

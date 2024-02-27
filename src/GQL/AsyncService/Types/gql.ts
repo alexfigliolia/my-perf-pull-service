@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  query nextPullJob {\n    nextPullJob {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n": types.NextPullJobDocument,
+    "\n  query nextRepositoryPullJob {\n    nextRepositoryPullJob {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n": types.NextRepositoryPullJobDocument,
     "\n  subscription repositoryPulls {\n    repositoryPulls {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n": types.RepositoryPullsDocument,
     "\n  mutation setJobStatus($id: Int!, $status: JobStatus!) {\n    setJobStatus(id: $id, status: $status)\n  }\n": types.SetJobStatusDocument,
 };
@@ -35,7 +35,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query nextPullJob {\n    nextPullJob {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n"): (typeof documents)["\n  query nextPullJob {\n    nextPullJob {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n"];
+export function gql(source: "\n  query nextRepositoryPullJob {\n    nextRepositoryPullJob {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n"): (typeof documents)["\n  query nextRepositoryPullJob {\n    nextRepositoryPullJob {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

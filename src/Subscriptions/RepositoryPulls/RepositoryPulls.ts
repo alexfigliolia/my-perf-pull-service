@@ -1,12 +1,12 @@
 import {
   AsyncServiceRequest,
   AsyncServiceSubscription,
-  nextPullJob,
+  nextRepositoryPullJob,
   repositoryPulls,
 } from "GQL";
 import type {
-  NextPullJobQuery,
-  NextPullJobQueryVariables,
+  NextRepositoryPullJobQuery,
+  NextRepositoryPullJobQueryVariables,
   RepositoryPullsSubscription,
   RepositoryPullsSubscriptionVariables,
 } from "GQL/AsyncService/Types";
@@ -43,13 +43,13 @@ export class RepositoryPulls extends BaseSubscription<
   public async poll() {
     try {
       const response = await AsyncServiceRequest<
-        NextPullJobQuery,
-        NextPullJobQueryVariables
+        NextRepositoryPullJobQuery,
+        NextRepositoryPullJobQueryVariables
       >({
-        query: nextPullJob,
+        query: nextRepositoryPullJob,
         variables: {},
       });
-      const config = this.parseResponse(response.data.nextPullJob);
+      const config = this.parseResponse(response.data.nextRepositoryPullJob);
       this.onPoll(config);
     } catch (error) {
       this.onPoll(null);

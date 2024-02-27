@@ -60,7 +60,8 @@ export enum Platform {
 
 export type Query = {
   __typename?: 'Query';
-  nextPullJob: RepositoryPullJob;
+  nextRepositoryPullJob: RepositoryPullJob;
+  nextRepositoryStatsPullJob: RepositoryPullJob;
 };
 
 export type RepositoryPullJob = {
@@ -84,12 +85,13 @@ export enum RequestMethod {
 export type Subscription = {
   __typename?: 'Subscription';
   repositoryPulls: RepositoryPullJob;
+  repositoryStatsPulls: RepositoryPullJob;
 };
 
-export type NextPullJobQueryVariables = Exact<{ [key: string]: never; }>;
+export type NextRepositoryPullJobQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NextPullJobQuery = { __typename?: 'Query', nextPullJob: { __typename?: 'RepositoryPullJob', jobId: number, api_url: string, token: string, platform: Platform, currentPage: number, pageSize: number, organizationId: number, requestMethod: RequestMethod } };
+export type NextRepositoryPullJobQuery = { __typename?: 'Query', nextRepositoryPullJob: { __typename?: 'RepositoryPullJob', jobId: number, api_url: string, token: string, platform: Platform, currentPage: number, pageSize: number, organizationId: number, requestMethod: RequestMethod } };
 
 export type RepositoryPullsSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
@@ -105,6 +107,6 @@ export type SetJobStatusMutationVariables = Exact<{
 export type SetJobStatusMutation = { __typename?: 'Mutation', setJobStatus: boolean };
 
 
-export const NextPullJobDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"nextPullJob"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nextPullJob"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobId"}},{"kind":"Field","name":{"kind":"Name","value":"api_url"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"organizationId"}},{"kind":"Field","name":{"kind":"Name","value":"requestMethod"}}]}}]}}]} as unknown as DocumentNode<NextPullJobQuery, NextPullJobQueryVariables>;
+export const NextRepositoryPullJobDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"nextRepositoryPullJob"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nextRepositoryPullJob"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobId"}},{"kind":"Field","name":{"kind":"Name","value":"api_url"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"organizationId"}},{"kind":"Field","name":{"kind":"Name","value":"requestMethod"}}]}}]}}]} as unknown as DocumentNode<NextRepositoryPullJobQuery, NextRepositoryPullJobQueryVariables>;
 export const RepositoryPullsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"repositoryPulls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"repositoryPulls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobId"}},{"kind":"Field","name":{"kind":"Name","value":"api_url"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"organizationId"}},{"kind":"Field","name":{"kind":"Name","value":"requestMethod"}}]}}]}}]} as unknown as DocumentNode<RepositoryPullsSubscription, RepositoryPullsSubscriptionVariables>;
 export const SetJobStatusDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"setJobStatus"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"JobStatus"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"setJobStatus"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}}]}]}}]} as unknown as DocumentNode<SetJobStatusMutation, SetJobStatusMutationVariables>;

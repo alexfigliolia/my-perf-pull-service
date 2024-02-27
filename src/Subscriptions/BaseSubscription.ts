@@ -1,4 +1,5 @@
-import { AsyncServiceRequest, type GQLSubscription, setJobStatus } from "GQL";
+import type { GQLSubscription } from "@figliolia/graphql-client";
+import { AsyncServiceRequest, setJobStatus } from "GQL";
 import {
   JobStatus,
   type SetJobStatusMutation,

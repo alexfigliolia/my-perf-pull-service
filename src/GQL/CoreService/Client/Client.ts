@@ -1,5 +1,5 @@
+import { GQLClient } from "@figliolia/graphql-client";
 import { Environment } from "Environment";
-import { GQLClient } from "GQL/Client";
 import type { CoreServiceOptions } from "./types";
 
 export class CoreServiceClient<

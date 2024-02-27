@@ -4,7 +4,8 @@ schema {
   subscription: Subscription
 }
 type Query {
-  nextPullJob: RepositoryPullJob!
+  nextRepositoryPullJob: RepositoryPullJob!
+  nextRepositoryStatsPullJob: RepositoryPullJob!
 }
 type RepositoryPullJob {
   jobId: Int!
@@ -24,6 +25,7 @@ type Mutation {
 }
 type Subscription {
   repositoryPulls: RepositoryPullJob!
+  repositoryStatsPulls: RepositoryPullJob!
 }
 enum Platform {
   github
