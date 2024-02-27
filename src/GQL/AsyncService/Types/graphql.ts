@@ -19,6 +19,7 @@ export type Scalars = {
 export enum JobStatus {
   Complete = 'complete',
   Failed = 'failed',
+  Inprogress = 'inprogress',
   Pending = 'pending'
 }
 

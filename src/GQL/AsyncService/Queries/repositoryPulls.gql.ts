@@ -1,6 +1,6 @@
 import { gql } from "graphql-request";
 
-export const pullSubscription = gql`
+export const repositoryPulls = gql`
   subscription repositoryPulls {
     repositoryPulls {
       jobId

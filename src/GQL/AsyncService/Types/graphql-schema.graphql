@@ -37,6 +37,7 @@ enum JobStatus {
   complete
   failed
   pending
+  inprogress
 }
 "Exposes a URL that specifies the behavior of this scalar."
 directive @specifiedBy(

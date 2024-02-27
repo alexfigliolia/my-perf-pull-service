@@ -56,6 +56,7 @@ export type Mutation = {
   loginWithGithub: User;
   logout: Scalars['Boolean']['output'];
   setOrganizationRepositories: Scalars['Boolean']['output'];
+  trackRepository: Repository;
   verifyAnonymous: Scalars['Boolean']['output'];
   verifySession: Scalars['Boolean']['output'];
 };
@@ -74,7 +75,13 @@ export type MutationLoginWithGithubArgs = {
 
 
 export type MutationSetOrganizationRepositoriesArgs = {
+  organizationId: Scalars['Int']['input'];
   repositories: Array<InputRepository>;
+};
+
+
+export type MutationTrackRepositoryArgs = {
+  id: Scalars['Int']['input'];
 };
 
 export type OrgAffiliationType = {
@@ -92,8 +99,19 @@ export enum Platform {
 
 export type Query = {
   __typename?: 'Query';
+  availableRepositories: Array<Repository>;
   installationSetup: Installation;
+  trackedRepositories: Array<Repository>;
   userAndAffiliations: UserAndAffiliations;
+};
+
+
+export type QueryAvailableRepositoriesArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  organizationId: Scalars['Int']['input'];
+  search?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<RepositorySortKeys>;
 };
 
 
@@ -102,6 +120,33 @@ export type QueryInstallationSetupArgs = {
   platform: Platform;
 };
 
+
+export type QueryTrackedRepositoriesArgs = {
+  organizationId: Scalars['Int']['input'];
+};
+
+export type Repository = {
+  __typename?: 'Repository';
+  api_url: Scalars['String']['output'];
+  clone_url: Scalars['String']['output'];
+  created_at: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  html_url: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  language: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  platform: Platform;
+  platform_id: Scalars['Int']['output'];
+  updated_at: Scalars['String']['output'];
+};
+
+export enum RepositorySortKeys {
+  CreatedAt = 'created_at',
+  Language = 'language',
+  Name = 'name',
+  UpdatedAt = 'updated_at'
+}
+
 export type RoleType = {
   __typename?: 'RoleType';
   role: UserRole;
@@ -109,11 +154,21 @@ export type RoleType = {
 
 export type Subscription = {
   __typename?: 'Subscription';
-  installationSetup: Installation;
+  availableRepositoriesStream: Array<Repository>;
+  installationSetupStream: Installation;
 };
 
 
-export type SubscriptionInstallationSetupArgs = {
+export type SubscriptionAvailableRepositoriesStreamArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  organizationId: Scalars['Int']['input'];
+  search?: InputMaybe<Scalars['String']['input']>;
+  sort?: InputMaybe<RepositorySortKeys>;
+};
+
+
+export type SubscriptionInstallationSetupStreamArgs = {
   installation_id: Scalars['Int']['input'];
   platform: Platform;
 };
@@ -139,6 +194,7 @@ export enum UserRole {
 }
 
 export type SetOrganizationRepositoriesMutationVariables = Exact<{
+  organizationId: Scalars['Int']['input'];
   repositories: Array<InputRepository> | InputRepository;
 }>;
 
@@ -146,4 +202,4 @@ export type SetOrganizationRepositoriesMutationVariables = Exact<{
 export type SetOrganizationRepositoriesMutation = { __typename?: 'Mutation', setOrganizationRepositories: boolean };
 
 
-export const SetOrganizationRepositoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"setOrganizationRepositories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"repositories"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"InputRepository"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"setOrganizationRepositories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"repositories"},"value":{"kind":"Variable","name":{"kind":"Name","value":"repositories"}}}]}]}}]} as unknown as DocumentNode<SetOrganizationRepositoriesMutation, SetOrganizationRepositoriesMutationVariables>;
+export const SetOrganizationRepositoriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"setOrganizationRepositories"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"organizationId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"repositories"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"InputRepository"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"setOrganizationRepositories"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"organizationId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"organizationId"}}},{"kind":"Argument","name":{"kind":"Name","value":"repositories"},"value":{"kind":"Variable","name":{"kind":"Name","value":"repositories"}}}]}]}}]} as unknown as DocumentNode<SetOrganizationRepositoriesMutation, SetOrganizationRepositoriesMutationVariables>;

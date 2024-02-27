@@ -1,7 +1,13 @@
 import { gql } from "graphql-request";
 
 export const setOrganizationRepositories = gql`
-  mutation setOrganizationRepositories($repositories: [InputRepository!]!) {
-    setOrganizationRepositories(repositories: $repositories)
+  mutation setOrganizationRepositories(
+    $organizationId: Int!
+    $repositories: [InputRepository!]!
+  ) {
+    setOrganizationRepositories(
+      organizationId: $organizationId
+      repositories: $repositories
+    )
   }
 `;

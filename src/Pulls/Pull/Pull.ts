@@ -4,36 +4,17 @@ import type {
   SetJobStatusMutationVariables,
 } from "GQL/AsyncService/Types";
 import { JobStatus } from "GQL/AsyncService/Types";
-import type { Options } from "./types";
+import type { BasePull } from "./types";
 
-export abstract class Pull<T extends any[]> {
-  options: Options;
-  currentPage: number;
-  data = [] as unknown as T;
+export abstract class Pull<T extends any[], O extends BasePull> {
+  options: O;
   status: JobStatus = JobStatus.Pending;
-  public static activePull: null | Pull<any> = null;
-  constructor(options: Options) {
+  public static activePull: null | Pull<any, any> = null;
+  constructor(options: O) {
     this.options = options;
-    this.currentPage = options.currentPage;
   }
 
-  public async pull(): Promise<Pull<T>> {
-    Pull.activePull = this;
-    try {
-      const results = await this.nextPage();
-      this.data.push(...results);
-      this.currentPage++;
-      const { length: size } = results;
-      if (size && size === this.options.pageSize) {
-        await this.pull();
-      }
-      this.status = JobStatus.Complete;
-    } catch (error) {
-      this.status = JobStatus.Failed;
-    }
-    Pull.activePull = null;
-    return this;
-  }
+  abstract pull(): Promise<Pull<T, O>>;
 
   abstract nextPage(): Promise<T>;
 

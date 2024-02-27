@@ -1,9 +1,8 @@
-import { Environment } from "Environment";
 import {
   AsyncServiceRequest,
-  GQLSubscription,
+  AsyncServiceSubscription,
   nextPullJob,
-  pullSubscription,
+  repositoryPulls,
 } from "GQL";
 import type {
   NextPullJobQuery,
@@ -20,13 +19,14 @@ export class RepositoryPulls extends BaseSubscription<
   Config,
   GithubRepositoryPull
 > {
-  public stream = new GQLSubscription<
+  public stream = new AsyncServiceSubscription<
     RepositoryPullsSubscription,
     RepositoryPullsSubscriptionVariables
-  >(`${Environment.ASYNC_SERVICE_URL}/graphql`, pullSubscription, {});
+  >(repositoryPulls, {});
 
   public initialize() {
     void this.poll();
+    this.stream.open();
     this.stream.onData(response => {
       if (!response.data?.repositoryPulls) {
         return;

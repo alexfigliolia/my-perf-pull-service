@@ -1,8 +1,16 @@
-import type { GQLSubscription } from "GQL";
-import type { Pull } from "Pulls/Pull";
+import { AsyncServiceRequest, type GQLSubscription, setJobStatus } from "GQL";
+import {
+  JobStatus,
+  type SetJobStatusMutation,
+  type SetJobStatusMutationVariables,
+} from "GQL/AsyncService/Types";
+import type { BasePull, Pull } from "Pulls/Pull";
 import type { Activity } from "./types";
 
-export abstract class BaseSubscription<P, T extends Pull<any>> {
+export abstract class BaseSubscription<
+  P extends BasePull,
+  T extends Pull<any, any>,
+> {
   private closed = false;
   public activity: Activity = "poll";
   abstract stream: GQLSubscription<any, any>;
@@ -29,13 +37,21 @@ export abstract class BaseSubscription<P, T extends Pull<any>> {
   }
 
   public onStream(job?: P) {
-    if (this.activity === "stream") {
-      if (!job) {
-        return;
-      }
-      const pull = this.createPull(job);
-      void this.enqueue(pull);
+    if (this.activity !== "stream" || !job) {
+      return;
     }
+    void AsyncServiceRequest<
+      SetJobStatusMutation,
+      SetJobStatusMutationVariables
+    >({
+      query: setJobStatus,
+      variables: {
+        id: job.id,
+        status: JobStatus.Inprogress,
+      },
+    });
+    const pull = this.createPull(job);
+    void this.enqueue(pull);
   }
 
   public async enqueue(pull: T) {

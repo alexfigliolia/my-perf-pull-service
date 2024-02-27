@@ -8,10 +8,10 @@ import type {
   SetOrganizationRepositoriesMutationVariables,
 } from "GQL/CoreService/Types";
 import { Platform } from "GQL/CoreService/Types";
-import { Pull } from "Pulls/Pull";
+import { PaginatedDataPull } from "Pulls/PaginatedDataPull";
 import type { IRepository } from "./types";
 
-export class GithubRepositoryPull extends Pull<IRepository[]> {
+export class GithubRepositoryPull extends PaginatedDataPull<IRepository[]> {
   public async nextPage() {
     const { pageSize: size, token, api_url: url } = this.options;
     const params = new URLSearchParams({
@@ -29,11 +29,8 @@ export class GithubRepositoryPull extends Pull<IRepository[]> {
   }
 
   public async onComplete() {
-    const promises: Promise<any>[] = [this.setJobStatus()];
-    if (this.data.length) {
-      promises.push(this.pushRepositoriesToCore());
-    }
-    await Promise.all(promises);
+    await this.pushRepositoriesToCore();
+    await this.setJobStatus();
   }
 
   private transform(repository: Repository) {
@@ -60,6 +57,7 @@ export class GithubRepositoryPull extends Pull<IRepository[]> {
       query: setOrganizationRepositories,
       variables: {
         repositories: this.data,
+        organizationId: this.options.organizationId,
       },
     });
   }

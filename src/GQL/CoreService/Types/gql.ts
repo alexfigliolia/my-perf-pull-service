@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  mutation setOrganizationRepositories($repositories: [InputRepository!]!) {\n    setOrganizationRepositories(repositories: $repositories)\n  }\n": types.SetOrganizationRepositoriesDocument,
+    "\n  mutation setOrganizationRepositories(\n    $organizationId: Int!\n    $repositories: [InputRepository!]!\n  ) {\n    setOrganizationRepositories(\n      organizationId: $organizationId\n      repositories: $repositories\n    )\n  }\n": types.SetOrganizationRepositoriesDocument,
 };
 
 /**
@@ -33,7 +33,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation setOrganizationRepositories($repositories: [InputRepository!]!) {\n    setOrganizationRepositories(repositories: $repositories)\n  }\n"): (typeof documents)["\n  mutation setOrganizationRepositories($repositories: [InputRepository!]!) {\n    setOrganizationRepositories(repositories: $repositories)\n  }\n"];
+export function gql(source: "\n  mutation setOrganizationRepositories(\n    $organizationId: Int!\n    $repositories: [InputRepository!]!\n  ) {\n    setOrganizationRepositories(\n      organizationId: $organizationId\n      repositories: $repositories\n    )\n  }\n"): (typeof documents)["\n  mutation setOrganizationRepositories(\n    $organizationId: Int!\n    $repositories: [InputRepository!]!\n  ) {\n    setOrganizationRepositories(\n      organizationId: $organizationId\n      repositories: $repositories\n    )\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
