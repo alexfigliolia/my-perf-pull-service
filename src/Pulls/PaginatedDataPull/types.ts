@@ -1,4 +1,4 @@
-import type { Platform } from "Pulls/types";
+import type { Platform, RequestMethod } from "GQL/AsyncService/Types";
 
 export interface PaginatedPullOptions {
   id: number;
@@ -8,5 +8,5 @@ export interface PaginatedPullOptions {
   platform: Platform;
   currentPage: number;
   organizationId: number;
-  requestMethod: "GET" | "POST";
+  requestMethod: RequestMethod;
 }

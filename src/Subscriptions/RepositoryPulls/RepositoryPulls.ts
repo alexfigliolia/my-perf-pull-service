@@ -1,18 +1,17 @@
+import { BaseSubscription } from "@alexfigliolia/my-performance-async";
 import {
   AsyncServiceRequest,
   AsyncServiceSubscription,
-  nextRepositoryPullJob,
-  repositoryPulls,
-} from "GQL";
-import type {
-  NextRepositoryPullJobQuery,
-  NextRepositoryPullJobQueryVariables,
-  RepositoryPullsSubscription,
-  RepositoryPullsSubscriptionVariables,
+} from "@alexfigliolia/my-performance-clients";
+import { nextRepositoryPullJob, repositoryPulls } from "GQL";
+import {
+  type NextRepositoryPullJobQuery,
+  type NextRepositoryPullJobQueryVariables,
+  Platform,
+  type RepositoryPullsSubscription,
+  type RepositoryPullsSubscriptionVariables,
 } from "GQL/AsyncService/Types";
-import { Platform } from "GQL/AsyncService/Types";
 import { GithubRepositoryPull } from "Pulls";
-import { BaseSubscription } from "Subscriptions/BaseSubscription";
 import type { Config, IncomingJob } from "./types";
 
 export class RepositoryPulls extends BaseSubscription<

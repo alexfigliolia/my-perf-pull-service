@@ -5,7 +5,7 @@ schema {
 }
 type Query {
   nextRepositoryPullJob: RepositoryPullJob!
-  nextRepositoryStatsPullJob: RepositoryPullJob!
+  nextRepositoryStatsPullJob: RepositoryStatsPullJob!
 }
 type RepositoryPullJob {
   jobId: Int!
@@ -18,6 +18,14 @@ type RepositoryPullJob {
   requestMethod: RequestMethod!
   organizationId: Int!
 }
+type RepositoryStatsPullJob {
+  jobId: Int!
+  id: Int!
+  clone_url: String!
+  token: String!
+  repositoryId: Int!
+  organizationId: Int!
+}
 type Mutation {
   setJobStatus(id: Int!, status: JobStatus!): Boolean!
   registerRepositoryPull(token: String!, api_url: String!, platform: Platform!, requestMethod: RequestMethod!, organizationId: Int!): Int!
@@ -25,7 +33,7 @@ type Mutation {
 }
 type Subscription {
   repositoryPulls: RepositoryPullJob!
-  repositoryStatsPulls: RepositoryPullJob!
+  repositoryStatsPulls: RepositoryStatsPullJob!
 }
 enum Platform {
   github

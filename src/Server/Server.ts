@@ -4,7 +4,7 @@ import path from "path";
 import { createServer } from "spdy";
 import { Environment } from "Environment";
 import { Logger } from "Logger";
-import { Subscriptions } from "Subscriptions";
+import { Subscribers } from "Subscriptions";
 import { Middleware } from "./Middleware";
 import { ProcessManager } from "./ProcessManager";
 
@@ -17,7 +17,7 @@ export class Server extends ProcessManager {
     Middleware.register(this.APP).build();
     const server = this.registerHTTP2();
     this.Server = server.listen({ port: Environment.SERVER_PORT });
-    Subscriptions.initialize();
+    Subscribers.initialize();
     return this.Server;
   }
 

@@ -61,7 +61,7 @@ export enum Platform {
 export type Query = {
   __typename?: 'Query';
   nextRepositoryPullJob: RepositoryPullJob;
-  nextRepositoryStatsPullJob: RepositoryPullJob;
+  nextRepositoryStatsPullJob: RepositoryStatsPullJob;
 };
 
 export type RepositoryPullJob = {
@@ -77,6 +77,16 @@ export type RepositoryPullJob = {
   token: Scalars['String']['output'];
 };
 
+export type RepositoryStatsPullJob = {
+  __typename?: 'RepositoryStatsPullJob';
+  clone_url: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  jobId: Scalars['Int']['output'];
+  organizationId: Scalars['Int']['output'];
+  repositoryId: Scalars['Int']['output'];
+  token: Scalars['String']['output'];
+};
+
 export enum RequestMethod {
   Get = 'GET',
   Post = 'POST'
@@ -85,7 +95,7 @@ export enum RequestMethod {
 export type Subscription = {
   __typename?: 'Subscription';
   repositoryPulls: RepositoryPullJob;
-  repositoryStatsPulls: RepositoryPullJob;
+  repositoryStatsPulls: RepositoryStatsPullJob;
 };
 
 export type NextRepositoryPullJobQueryVariables = Exact<{ [key: string]: never; }>;

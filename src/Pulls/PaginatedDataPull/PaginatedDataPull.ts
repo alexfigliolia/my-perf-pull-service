@@ -1,11 +1,8 @@
+import { Pull } from "@alexfigliolia/my-performance-async";
 import { JobStatus } from "GQL/AsyncService/Types";
-import { Pull } from "Pulls/Pull";
 import type { PaginatedPullOptions as Options } from "./types";
 
-export abstract class PaginatedDataPull<T extends any[]> extends Pull<
-  T,
-  Options
-> {
+export abstract class PaginatedDataPull<T extends any[]> extends Pull<Options> {
   currentPage: number;
   data = [] as unknown as T;
   constructor(options: Options) {
@@ -13,7 +10,7 @@ export abstract class PaginatedDataPull<T extends any[]> extends Pull<
     this.currentPage = options.currentPage;
   }
 
-  public async pull(): Promise<Pull<T, Options>> {
+  public async pull(): Promise<Pull<Options>> {
     Pull.activePull = this;
     this.status = JobStatus.Inprogress;
     try {

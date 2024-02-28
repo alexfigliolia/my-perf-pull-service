@@ -1,9 +1,9 @@
+import { CoreServiceRequest } from "@alexfigliolia/my-performance-clients";
 import type { Repository } from "@octokit/webhooks-types";
 import { API } from "Github";
 import { Errors } from "Github/Errors";
 import { setOrganizationRepositories } from "GQL";
 import { JobStatus } from "GQL/AsyncService/Types";
-import { CoreServiceRequest } from "GQL/CoreService/Client/Request";
 import type {
   SetOrganizationRepositoriesMutation,
   SetOrganizationRepositoriesMutationVariables,

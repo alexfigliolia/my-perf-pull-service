@@ -1,7 +1,7 @@
 import { type Server as HTTP1Server } from "http";
 import { type Server as HTTP2Server } from "spdy";
 import { Logger } from "Logger";
-import { Subscriptions } from "Subscriptions";
+import { Subscribers } from "Subscriptions";
 
 export class ProcessManager {
   private static shuttingDown = false;
@@ -20,6 +20,6 @@ export class ProcessManager {
     this.shuttingDown = true;
     Logger.silence();
     this.Server?.close();
-    Subscriptions.destroy();
+    Subscribers.destroy();
   };
 }
