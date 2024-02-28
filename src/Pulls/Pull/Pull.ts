@@ -21,7 +21,9 @@ export abstract class Pull<T extends any[], O extends BasePull> {
   abstract pushResultsToCore(): Promise<void>;
 
   public async onComplete() {
-    await this.pushResultsToCore();
+    if (this.status !== JobStatus.Failed) {
+      await this.pushResultsToCore();
+    }
     await this.setJobStatus();
   }
 
