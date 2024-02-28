@@ -2,6 +2,7 @@ import type { Repository } from "@octokit/webhooks-types";
 import { API } from "Github";
 import { Errors } from "Github/Errors";
 import { setOrganizationRepositories } from "GQL";
+import { JobStatus } from "GQL/AsyncService/Types";
 import { CoreServiceRequest } from "GQL/CoreService/Client/Request";
 import type {
   SetOrganizationRepositoriesMutation,
@@ -28,11 +29,6 @@ export class GithubRepositoryPull extends PaginatedDataPull<IRepository[]> {
     return response.map(repo => this.transform(repo));
   }
 
-  public async onComplete() {
-    await this.pushRepositoriesToCore();
-    await this.setJobStatus();
-  }
-
   private transform(repository: Repository) {
     return {
       name: repository.name,
@@ -49,16 +45,20 @@ export class GithubRepositoryPull extends PaginatedDataPull<IRepository[]> {
     };
   }
 
-  private pushRepositoriesToCore() {
-    return CoreServiceRequest<
-      SetOrganizationRepositoriesMutation,
-      SetOrganizationRepositoriesMutationVariables
-    >({
-      query: setOrganizationRepositories,
-      variables: {
-        repositories: this.data,
-        organizationId: this.options.organizationId,
-      },
-    });
+  public async pushResultsToCore() {
+    try {
+      await CoreServiceRequest<
+        SetOrganizationRepositoriesMutation,
+        SetOrganizationRepositoriesMutationVariables
+      >({
+        query: setOrganizationRepositories,
+        variables: {
+          repositories: this.data,
+          organizationId: this.options.organizationId,
+        },
+      });
+    } catch (error) {
+      this.status = JobStatus.Failed;
+    }
   }
 }

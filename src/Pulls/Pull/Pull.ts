@@ -18,7 +18,12 @@ export abstract class Pull<T extends any[], O extends BasePull> {
 
   abstract nextPage(): Promise<T>;
 
-  abstract onComplete(): Promise<void>;
+  abstract pushResultsToCore(): Promise<void>;
+
+  public async onComplete() {
+    await this.pushResultsToCore();
+    await this.setJobStatus();
+  }
 
   protected setJobStatus() {
     return AsyncServiceRequest<

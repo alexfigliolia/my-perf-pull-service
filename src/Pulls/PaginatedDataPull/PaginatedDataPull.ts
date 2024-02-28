@@ -34,5 +34,5 @@ export abstract class PaginatedDataPull<T extends any[]> extends Pull<
 
   abstract nextPage(): Promise<T>;
 
-  abstract onComplete(): Promise<void>;
+  abstract pushResultsToCore(): Promise<void>;
 }
