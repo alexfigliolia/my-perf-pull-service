@@ -27,16 +27,20 @@ export abstract class Pull<T extends any[], O extends BasePull> {
     await this.setJobStatus();
   }
 
-  protected setJobStatus() {
-    return AsyncServiceRequest<
-      SetJobStatusMutation,
-      SetJobStatusMutationVariables
-    >({
-      query: setJobStatus,
-      variables: {
-        id: this.options.id,
-        status: this.status,
-      },
-    });
+  protected async setJobStatus() {
+    try {
+      await AsyncServiceRequest<
+        SetJobStatusMutation,
+        SetJobStatusMutationVariables
+      >({
+        query: setJobStatus,
+        variables: {
+          id: this.options.id,
+          status: this.status,
+        },
+      });
+    } catch (error) {
+      // TODO - handle status update errors
+    }
   }
 }
