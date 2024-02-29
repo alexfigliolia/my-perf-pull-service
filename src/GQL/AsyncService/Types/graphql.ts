@@ -28,6 +28,7 @@ export type Mutation = {
   registerRepositoryPull: Scalars['Int']['output'];
   registerRepositoryStatsPull: Scalars['Int']['output'];
   setJobStatus: Scalars['Boolean']['output'];
+  setRepositoryStatsJobStatus: Scalars['Boolean']['output'];
 };
 
 
@@ -42,6 +43,7 @@ export type MutationRegisterRepositoryPullArgs = {
 
 export type MutationRegisterRepositoryStatsPullArgs = {
   clone_url: Scalars['String']['input'];
+  date?: InputMaybe<Scalars['String']['input']>;
   organizationId: Scalars['Int']['input'];
   repositoryId: Scalars['Int']['input'];
   token: Scalars['String']['input'];
@@ -80,6 +82,7 @@ export type RepositoryPullJob = {
 export type RepositoryStatsPullJob = {
   __typename?: 'RepositoryStatsPullJob';
   clone_url: Scalars['String']['output'];
+  date?: Maybe<Scalars['String']['output']>;
   id: Scalars['Int']['output'];
   jobId: Scalars['Int']['output'];
   organizationId: Scalars['Int']['output'];
@@ -108,15 +111,6 @@ export type RepositoryPullsSubscriptionVariables = Exact<{ [key: string]: never;
 
 export type RepositoryPullsSubscription = { __typename?: 'Subscription', repositoryPulls: { __typename?: 'RepositoryPullJob', jobId: number, api_url: string, token: string, platform: Platform, currentPage: number, pageSize: number, organizationId: number, requestMethod: RequestMethod } };
 
-export type SetJobStatusMutationVariables = Exact<{
-  id: Scalars['Int']['input'];
-  status: JobStatus;
-}>;
-
-
-export type SetJobStatusMutation = { __typename?: 'Mutation', setJobStatus: boolean };
-
 
 export const NextRepositoryPullJobDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"nextRepositoryPullJob"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nextRepositoryPullJob"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobId"}},{"kind":"Field","name":{"kind":"Name","value":"api_url"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"organizationId"}},{"kind":"Field","name":{"kind":"Name","value":"requestMethod"}}]}}]}}]} as unknown as DocumentNode<NextRepositoryPullJobQuery, NextRepositoryPullJobQueryVariables>;
 export const RepositoryPullsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"repositoryPulls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"repositoryPulls"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"jobId"}},{"kind":"Field","name":{"kind":"Name","value":"api_url"}},{"kind":"Field","name":{"kind":"Name","value":"token"}},{"kind":"Field","name":{"kind":"Name","value":"platform"}},{"kind":"Field","name":{"kind":"Name","value":"currentPage"}},{"kind":"Field","name":{"kind":"Name","value":"pageSize"}},{"kind":"Field","name":{"kind":"Name","value":"organizationId"}},{"kind":"Field","name":{"kind":"Name","value":"requestMethod"}}]}}]}}]} as unknown as DocumentNode<RepositoryPullsSubscription, RepositoryPullsSubscriptionVariables>;
-export const SetJobStatusDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"setJobStatus"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"status"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"JobStatus"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"setJobStatus"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"status"},"value":{"kind":"Variable","name":{"kind":"Name","value":"status"}}}]}]}}]} as unknown as DocumentNode<SetJobStatusMutation, SetJobStatusMutationVariables>;

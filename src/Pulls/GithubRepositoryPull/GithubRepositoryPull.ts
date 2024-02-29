@@ -16,8 +16,8 @@ export class GithubRepositoryPull extends PaginatedDataPull<IRepository[]> {
   public async nextPage() {
     const { pageSize: size, token, api_url: url } = this.options;
     const params = new URLSearchParams({
-      page: this.currentPage.toString(),
       per_page: size.toString(),
+      page: this.currentPage.toString(),
     });
     const response = await API.wrapGet<Repository[]>(
       `${url}?${params.toString()}`,

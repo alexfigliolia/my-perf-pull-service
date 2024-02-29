@@ -15,7 +15,6 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  query nextRepositoryPullJob {\n    nextRepositoryPullJob {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n": types.NextRepositoryPullJobDocument,
     "\n  subscription repositoryPulls {\n    repositoryPulls {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n": types.RepositoryPullsDocument,
-    "\n  mutation setJobStatus($id: Int!, $status: JobStatus!) {\n    setJobStatus(id: $id, status: $status)\n  }\n": types.SetJobStatusDocument,
 };
 
 /**
@@ -40,10 +39,6 @@ export function gql(source: "\n  query nextRepositoryPullJob {\n    nextReposito
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  subscription repositoryPulls {\n    repositoryPulls {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n"): (typeof documents)["\n  subscription repositoryPulls {\n    repositoryPulls {\n      jobId\n      api_url\n      token\n      platform\n      currentPage\n      pageSize\n      organizationId\n      requestMethod\n    }\n  }\n"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "\n  mutation setJobStatus($id: Int!, $status: JobStatus!) {\n    setJobStatus(id: $id, status: $status)\n  }\n"): (typeof documents)["\n  mutation setJobStatus($id: Int!, $status: JobStatus!) {\n    setJobStatus(id: $id, status: $status)\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

@@ -56,6 +56,7 @@ export type Mutation = {
   loginWithGithub: User;
   logout: Scalars['Boolean']['output'];
   setOrganizationRepositories: Scalars['Boolean']['output'];
+  setRepositoryStats: Scalars['Boolean']['output'];
   trackRepository: Repository;
   verifyAnonymous: Scalars['Boolean']['output'];
   verifySession: Scalars['Boolean']['output'];
@@ -77,6 +78,16 @@ export type MutationLoginWithGithubArgs = {
 export type MutationSetOrganizationRepositoriesArgs = {
   organizationId: Scalars['Int']['input'];
   repositories: Array<InputRepository>;
+};
+
+
+export type MutationSetRepositoryStatsArgs = {
+  commits: Scalars['Int']['input'];
+  date?: InputMaybe<Scalars['String']['input']>;
+  lines: Scalars['Int']['input'];
+  organizationId: Scalars['Int']['input'];
+  repositoryId: Scalars['Int']['input'];
+  userStats: Array<UserContributionsInput>;
 };
 
 
@@ -185,6 +196,12 @@ export type UserAndAffiliations = {
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
   organizations: Array<OrgAffiliationType>;
+};
+
+export type UserContributionsInput = {
+  commits: Scalars['Int']['input'];
+  email: Scalars['String']['input'];
+  lines: Scalars['Int']['input'];
 };
 
 export enum UserRole {
