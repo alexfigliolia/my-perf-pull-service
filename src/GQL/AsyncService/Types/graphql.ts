@@ -25,10 +25,17 @@ export enum JobStatus {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  deleteRepositoryStatsJobs: Scalars['Boolean']['output'];
   registerRepositoryPull: Scalars['Int']['output'];
   registerRepositoryStatsPull: Scalars['Int']['output'];
   setJobStatus: Scalars['Boolean']['output'];
   setRepositoryStatsJobStatus: Scalars['Boolean']['output'];
+  subscribeToRepositoryStats: Scalars['Int']['output'];
+};
+
+
+export type MutationDeleteRepositoryStatsJobsArgs = {
+  repositoryId: Scalars['Int']['input'];
 };
 
 
@@ -53,6 +60,21 @@ export type MutationRegisterRepositoryStatsPullArgs = {
 export type MutationSetJobStatusArgs = {
   id: Scalars['Int']['input'];
   status: JobStatus;
+};
+
+
+export type MutationSetRepositoryStatsJobStatusArgs = {
+  id: Scalars['Int']['input'];
+  status: JobStatus;
+};
+
+
+export type MutationSubscribeToRepositoryStatsArgs = {
+  clone_url: Scalars['String']['input'];
+  date?: InputMaybe<Scalars['String']['input']>;
+  organizationId: Scalars['Int']['input'];
+  repositoryId: Scalars['Int']['input'];
+  token: Scalars['String']['input'];
 };
 
 export enum Platform {
@@ -86,6 +108,7 @@ export type RepositoryStatsPullJob = {
   id: Scalars['Int']['output'];
   jobId: Scalars['Int']['output'];
   organizationId: Scalars['Int']['output'];
+  range?: Maybe<Schedule>;
   repositoryId: Scalars['Int']['output'];
   token: Scalars['String']['output'];
 };
@@ -93,6 +116,14 @@ export type RepositoryStatsPullJob = {
 export enum RequestMethod {
   Get = 'GET',
   Post = 'POST'
+}
+
+export enum Schedule {
+  Daily = 'daily',
+  Monthly = 'monthly',
+  Once = 'once',
+  Weekly = 'weekly',
+  Yearly = 'yearly'
 }
 
 export type Subscription = {
