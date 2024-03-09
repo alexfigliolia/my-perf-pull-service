@@ -16,6 +16,16 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type CurrentUsersTeam = {
+  __typename?: 'CurrentUsersTeam';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  organizationId: Scalars['Int']['output'];
+  projects: Array<TrackedRepositoryType>;
+  role: RoleType;
+  users: Array<User>;
+};
+
 export type GithubUserAuthorizationType = {
   __typename?: 'GithubUserAuthorizationType';
   id: Scalars['Int']['output'];
@@ -53,6 +63,7 @@ export enum InstallationType {
 export type Mutation = {
   __typename?: 'Mutation';
   createGithubAccount: Scalars['Boolean']['output'];
+  createTeam: CurrentUsersTeam;
   loginWithGithub: User;
   logout: Scalars['Boolean']['output'];
   setOrganizationRepositories: Scalars['Boolean']['output'];
@@ -70,6 +81,12 @@ export type MutationCreateGithubAccountArgs = {
 };
 
 
+export type MutationCreateTeamArgs = {
+  name: Scalars['String']['input'];
+  organizationId: Scalars['Int']['input'];
+};
+
+
 export type MutationLoginWithGithubArgs = {
   code: Scalars['String']['input'];
 };
@@ -83,9 +100,9 @@ export type MutationSetOrganizationRepositoriesArgs = {
 
 export type MutationSetRepositoryStatsArgs = {
   commits: Scalars['Int']['input'];
-  date?: InputMaybe<Scalars['String']['input']>;
   lines: Scalars['Int']['input'];
   organizationId: Scalars['Int']['input'];
+  range?: InputMaybe<Schedule>;
   repositoryId: Scalars['Int']['input'];
   userStats: Array<UserContributionsInput>;
 };
@@ -103,6 +120,15 @@ export type OrgAffiliationType = {
   roles: Array<RoleType>;
 };
 
+export type OverallStatsPerUser = {
+  __typename?: 'OverallStatsPerUser';
+  commits: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  lines: Scalars['Int']['output'];
+  linesPerMonth: Array<Scalars['Int']['output']>;
+  name: Scalars['String']['output'];
+};
+
 export enum Platform {
   Bitbucket = 'bitbucket',
   Github = 'github'
@@ -112,6 +138,12 @@ export type Query = {
   __typename?: 'Query';
   availableRepositories: Array<Repository>;
   installationSetup: Installation;
+  myTeams: Array<CurrentUsersTeam>;
+  overallStatsPerUser: TeamStats;
+  standouts: Array<Standout>;
+  teams: Array<Team>;
+  totalRepositories: Scalars['Int']['output'];
+  totalTeams: Scalars['Int']['output'];
   trackedRepositories: Array<Repository>;
   userAndAffiliations: UserAndAffiliations;
 };
@@ -129,6 +161,40 @@ export type QueryAvailableRepositoriesArgs = {
 export type QueryInstallationSetupArgs = {
   installation_id: Scalars['Int']['input'];
   platform: Platform;
+};
+
+
+export type QueryMyTeamsArgs = {
+  organizationId: Scalars['Int']['input'];
+};
+
+
+export type QueryOverallStatsPerUserArgs = {
+  organizationId: Scalars['Int']['input'];
+};
+
+
+export type QueryStandoutsArgs = {
+  organizationId: Scalars['Int']['input'];
+};
+
+
+export type QueryTeamsArgs = {
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
+  omitCurrentUser?: InputMaybe<Scalars['Boolean']['input']>;
+  organizationId: Scalars['Int']['input'];
+  search?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QueryTotalRepositoriesArgs = {
+  organizationId: Scalars['Int']['input'];
+};
+
+
+export type QueryTotalTeamsArgs = {
+  organizationId: Scalars['Int']['input'];
 };
 
 
@@ -163,6 +229,22 @@ export type RoleType = {
   role: UserRole;
 };
 
+export enum Schedule {
+  Daily = 'daily',
+  Monthly = 'monthly',
+  Once = 'once',
+  Weekly = 'weekly',
+  Yearly = 'yearly'
+}
+
+export type Standout = {
+  __typename?: 'Standout';
+  id: Scalars['Int']['output'];
+  increase: Scalars['Int']['output'];
+  lines: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   availableRepositoriesStream: Array<Repository>;
@@ -182,6 +264,28 @@ export type SubscriptionAvailableRepositoriesStreamArgs = {
 export type SubscriptionInstallationSetupStreamArgs = {
   installation_id: Scalars['Int']['input'];
   platform: Platform;
+};
+
+export type Team = {
+  __typename?: 'Team';
+  id: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  organizationId: Scalars['Int']['output'];
+  projects: Array<TrackedRepositoryType>;
+  users: Array<User>;
+};
+
+export type TeamStats = {
+  __typename?: 'TeamStats';
+  totalCommits: Scalars['Int']['output'];
+  totalLines: Scalars['Int']['output'];
+  users: Array<OverallStatsPerUser>;
+};
+
+export type TrackedRepositoryType = {
+  __typename?: 'TrackedRepositoryType';
+  id: Scalars['Int']['output'];
+  repository: Repository;
 };
 
 export type User = {
