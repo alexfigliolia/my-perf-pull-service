@@ -14,6 +14,8 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Matrix: { input: any; output: any; }
+  Mesh: { input: any; output: any; }
 };
 
 export type CurrentUsersTeam = {
@@ -111,6 +113,7 @@ export type MutationSetOrganizationRepositoriesArgs = {
 export type MutationSetRepositoryStatsArgs = {
   commits: Scalars['Int']['input'];
   lines: Scalars['Int']['input'];
+  mesh: Scalars['Mesh']['input'];
   organizationId: Scalars['Int']['input'];
   range?: InputMaybe<Schedule>;
   repositoryId: Scalars['Int']['input'];
@@ -146,13 +149,22 @@ export enum Platform {
   Github = 'github'
 }
 
+export type ProjectTrend = {
+  __typename?: 'ProjectTrend';
+  trackedProjects: Array<TeamProject>;
+  trend: Scalars['Int']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   availableRepositories: Array<Repository>;
+  countLinesAndCommits: StatsPerRepository;
   installationSetup: Installation;
   myTeams: Array<CurrentUsersTeam>;
   overallStatsPerUser: TeamStats;
   standouts: Array<Standout>;
+  teamMesh: TeamMesh;
+  teammateProfile: OverallStatsPerUser;
   teams: Array<Team>;
   totalRepositories: Scalars['Int']['output'];
   totalTeams: Scalars['Int']['output'];
@@ -167,6 +179,11 @@ export type QueryAvailableRepositoriesArgs = {
   organizationId: Scalars['Int']['input'];
   search?: InputMaybe<Scalars['String']['input']>;
   sort?: InputMaybe<RepositorySortKeys>;
+};
+
+
+export type QueryCountLinesAndCommitsArgs = {
+  organizationId: Scalars['Int']['input'];
 };
 
 
@@ -193,6 +210,18 @@ export type QueryStandoutsArgs = {
 };
 
 
+export type QueryTeamMeshArgs = {
+  organizationId: Scalars['Int']['input'];
+  teamId: Scalars['Int']['input'];
+};
+
+
+export type QueryTeammateProfileArgs = {
+  organizationId: Scalars['Int']['input'];
+  userId: Scalars['Int']['input'];
+};
+
+
 export type QueryTeamsArgs = {
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
@@ -204,6 +233,7 @@ export type QueryTeamsArgs = {
 
 export type QueryTotalRepositoriesArgs = {
   organizationId: Scalars['Int']['input'];
+  tracked?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 
@@ -260,6 +290,12 @@ export type Standout = {
   name: Scalars['String']['output'];
 };
 
+export type StatsPerRepository = {
+  __typename?: 'StatsPerRepository';
+  commits: Scalars['Int']['output'];
+  lines: Scalars['Int']['output'];
+};
+
 export type Subscription = {
   __typename?: 'Subscription';
   availableRepositoriesStream: Array<Repository>;
@@ -290,10 +326,25 @@ export type Team = {
   users: Array<User>;
 };
 
-export type TeamStats = {
-  __typename?: 'TeamStats';
+export type TeamMesh = {
+  __typename?: 'TeamMesh';
+  key: Array<Scalars['String']['output']>;
+  mesh: Scalars['Matrix']['output'];
+};
+
+export type TeamProject = {
+  __typename?: 'TeamProject';
   id: Scalars['Int']['output'];
   name: Scalars['String']['output'];
+};
+
+export type TeamStats = {
+  __typename?: 'TeamStats';
+  commitTrend: Scalars['Int']['output'];
+  id: Scalars['Int']['output'];
+  lineTrend: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  projects: ProjectTrend;
   totalCommits: Scalars['Int']['output'];
   totalLines: Scalars['Int']['output'];
   users: Array<OverallStatsPerUser>;

@@ -1,2 +1,2 @@
 export * from "./repositoryPulls.gql";
-export * from "./nextPull.gql";
+export * from "./nextRepositoryPullJob.gql";
