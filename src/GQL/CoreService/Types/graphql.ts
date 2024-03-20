@@ -115,6 +115,7 @@ export type MutationSetRepositoryStatsArgs = {
   lines: Scalars['Int']['input'];
   mesh: Scalars['Mesh']['input'];
   organizationId: Scalars['Int']['input'];
+  pullRequests: Array<PullRequestEntry>;
   range?: InputMaybe<Schedule>;
   repositoryId: Scalars['Int']['input'];
   userStats: Array<UserContributionsInput>;
@@ -142,6 +143,7 @@ export type OverallStatsPerUser = {
   lines: Scalars['Int']['output'];
   linesPerMonth: Array<Scalars['Int']['output']>;
   name: Scalars['String']['output'];
+  pullRequests: Scalars['Int']['output'];
 };
 
 export enum Platform {
@@ -155,6 +157,21 @@ export type ProjectTrend = {
   trend: Scalars['Int']['output'];
 };
 
+export type PullRequest = {
+  __typename?: 'PullRequest';
+  author: Scalars['String']['output'];
+  date: Scalars['String']['output'];
+  description: Scalars['String']['output'];
+  id: Scalars['Int']['output'];
+  project: Scalars['String']['output'];
+};
+
+export type PullRequestEntry = {
+  author: Scalars['String']['input'];
+  date: Scalars['String']['input'];
+  description: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   availableRepositories: Array<Repository>;
@@ -164,6 +181,7 @@ export type Query = {
   overallStatsPerUser: TeamStats;
   standouts: Array<Standout>;
   teamMesh: TeamMesh;
+  teamPullRequests: Array<PullRequest>;
   teammateProfile: OverallStatsPerUser;
   teams: Array<Team>;
   totalRepositories: Scalars['Int']['output'];
@@ -212,6 +230,13 @@ export type QueryStandoutsArgs = {
 
 export type QueryTeamMeshArgs = {
   organizationId: Scalars['Int']['input'];
+  teamId: Scalars['Int']['input'];
+};
+
+
+export type QueryTeamPullRequestsArgs = {
+  organizationId: Scalars['Int']['input'];
+  page?: InputMaybe<Scalars['Int']['input']>;
   teamId: Scalars['Int']['input'];
 };
 
